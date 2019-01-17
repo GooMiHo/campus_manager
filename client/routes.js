@@ -4,6 +4,14 @@ import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {Login, Signup, UserHome} from './components'
 import {me} from './store'
+import CampusList from './components/campus-listings/campus-listings'
+import StudentsList from './components/student-listings/student-listings'
+import CampusInfo from './components/campus-listings/campus-full-info'
+import StudentInfo from './components/student-listings/student-full-info'
+import AddCampus from './components/forms/add-campus'
+import AddStudent from './components/forms/add-student'
+import UpdateCampus from './components/forms/update-campus'
+import UpdateStudent from './components/forms/update-student'
 
 /**
  * COMPONENT
@@ -25,6 +33,22 @@ class Routes extends Component {
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
+            <Route exact path="/campuses" component={CampusList} />
+            <Route exact path="/add-campus" component={AddCampus} />
+            <Route exact path="/add-student" component={AddStudent} />
+            <Route exact path="/students" component={StudentsList} />
+            <Route exact path="/campuses/:campusId" component={CampusInfo} />
+            <Route
+              exact
+              path="/update/campuses/:campusId"
+              component={UpdateCampus}
+            />
+            <Route
+              exact
+              path="/update/students/:studentId"
+              component={UpdateStudent}
+            />
+            <Route path="/students/:studentId" component={StudentInfo} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
