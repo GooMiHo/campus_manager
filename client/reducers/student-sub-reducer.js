@@ -22,16 +22,25 @@ const addStudent = student => ({
 })
 
 // thunk creator
-export const fetchStudents = () => {
+export const fetchStudents = userId => {
   return async dispatch => {
-    const {data: students} = await axios.get('/api/students')
+    //const {data: students} = await axios.get(`/api/students/${userId}`)
+    const {data: students} = await axios.get(`/api/students/${userId}`)
     dispatch(gotStudents(students))
   }
 }
 
-export const makeStudent = student => {
-  return dispatch => {
-    dispatch(addStudent(student))
+export const makeStudent = (student, userId) => {
+  console.log('hi2')
+  return async dispatch => {
+    console.log('hi')
+    const {data: newStudent} = await axios.post(
+      `/api/students/${userId}/student`,
+      student
+    )
+    console.log('newStudent ', newStudent)
+    newStudent.userId = userId
+    dispatch(addStudent(newStudent))
   }
 }
 

@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 const backupCampuses = [
   {
     id: 4,
@@ -281,13 +279,7 @@ const backupStudents = [
   }
 ]
 
-export default function refillDB(userId) {
-  backupCampuses.forEach(async campus => {
-    campus.id = Number(`${userId}${campus.id}`)
-    await axios.post(`/api/campuses/${userId}`, campus)
-  })
-  backupStudents.forEach(async student => {
-    student.id = Number(`${userId}${student.id}`)
-    await axios.post(`/api/students/${userId}`, student)
-  })
+module.exports = {
+  backupCampuses,
+  backupStudents
 }

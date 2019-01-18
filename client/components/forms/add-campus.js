@@ -22,7 +22,7 @@ export default class AddCampus extends Component {
 
     const campus = this.state
     if (this.state.imageUrl.length === 0) campus.imageUrl = DEFAULT_ENCODING
-    const {data: newCampus} = await axios.post('/api/campuses', campus)
+    const {data: newCampus} = await axios.post('/api/campuses/campus', campus)
     makeCampus(newCampus)
     this.setState({imageUrl: '', name: '', address: '', description: ''})
     this.props.history.push('/campuses')

@@ -8,6 +8,7 @@ import refillDB from '../backUpData'
  */
 export const UserHome = props => {
   const {email} = props
+  const {id} = props
 
   return (
     <main>
@@ -21,7 +22,7 @@ export const UserHome = props => {
         at quam convallis volutpat{' '}
       </h3>
       <div className="frontpage-text-container">
-        <button type="button" onClick={() => refillDB()}>
+        <button type="button" onClick={() => refillDB(id)}>
           click
         </button>
         <p>
@@ -47,7 +48,8 @@ export const UserHome = props => {
  */
 const mapState = state => {
   return {
-    email: state.user.email
+    email: state.user.email,
+    id: state.user.id
   }
 }
 

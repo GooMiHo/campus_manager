@@ -9,7 +9,7 @@ const gotSingleCampus = campus => ({
 
 export const fetchSingleCampus = id => {
   return async dispatch => {
-    const {data: campus} = await axios.get(`/api/campuses/${id}`)
+    const {data: campus} = await axios.get(`/api/campuses/campus/${id}`)
     dispatch(gotSingleCampus(campus))
   }
 }

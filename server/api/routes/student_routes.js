@@ -2,9 +2,11 @@ const {Student, Campus} = require('../../db/models')
 const studentRouter = require('express').Router()
 
 // GET path '/api/students'
-studentRouter.get('/', async (req, res, next) => {
+studentRouter.get('/:userId', async (req, res, next) => {
+  const userId = req.params.userId
   try {
     const students = await Student.findAll({
+      where: {userId: userId},
       include: [{model: Campus, include: [{all: true}]}]
     })
     res.json(students)
@@ -13,8 +15,8 @@ studentRouter.get('/', async (req, res, next) => {
   }
 })
 
-// GET path '/api/students/:id'
-studentRouter.get('/:id', async (req, res, next) => {
+// GET path '/api/students/student/:id'
+studentRouter.get('/:userId', async (req, res, next) => {
   try {
     const id = req.params.id
     const student = await Student.findOne({
@@ -27,17 +29,21 @@ studentRouter.get('/:id', async (req, res, next) => {
   }
 })
 
-// GET path '/api/students'
-studentRouter.post('/', async (req, res, next) => {
+// GET path '/api/students/student'
+studentRouter.post('/:userId/student', async (req, res, next) => {
+  console.log('req.body ', req.body)
   try {
-    const newStudent = await Student.create(req.body) //maybe add some if statements to prevent submission without required fields
+    const userId = req.params.userId
+    const student = req.body
+    student.userId = userId
+    const newStudent = await Student.create(student) //maybe add some if statements to prevent submission without required fields
     res.status(201).json(newStudent)
   } catch (err) {
     next(err)
   }
 })
 
-studentRouter.delete('/:id', (req, res, next) => {
+studentRouter.delete('/:userId/student/:id', (req, res, next) => {
   try {
     const id = req.params.id
     Student.destroy({where: {id: id}})
@@ -47,7 +53,7 @@ studentRouter.delete('/:id', (req, res, next) => {
   }
 })
 
-studentRouter.put('/:id', async (req, res, next) => {
+studentRouter.put('/:userId/student/:id', async (req, res, next) => {
   try {
     const id = req.params.id
     const [numberOfEffectedRows, result] = await Student.update(req.body, {

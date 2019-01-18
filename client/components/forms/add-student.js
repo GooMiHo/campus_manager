@@ -3,8 +3,9 @@ import axios from 'axios'
 import {DEFAULT_ENCODING} from 'crypto'
 import {makeStudent} from '../../reducers/student-sub-reducer'
 import CampusSelection from './campus-selection'
+import {connect} from 'react-redux'
 
-export default class AddStudent extends Component {
+class AddStudentComp extends Component {
   constructor() {
     super()
     this.state = {
@@ -22,8 +23,7 @@ export default class AddStudent extends Component {
     event.preventDefault()
     let student = this.state
     if (this.state.imageUrl.length === 0) student.imageUrl = DEFAULT_ENCODING
-    const {data: newStudent} = axios.post('api/students', student)
-    makeStudent(newStudent)
+    this.props.makeStudent(student, this.props.userId)
     this.setState({
       firstName: '',
       lastName: '',
@@ -36,6 +36,7 @@ export default class AddStudent extends Component {
 
   handleChange(event) {
     let value = event.target.value
+    console.log('value', value)
     if (event.target.name === 'campusId') value = Number(value)
     this.setState({
       [event.target.name]: value
@@ -104,3 +105,18 @@ export default class AddStudent extends Component {
     )
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    userId: state.user.id
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    makeStudent: userId => dispatch(makeStudent(userId))
+  }
+}
+
+const AddStudent = connect(mapStateToProps, mapDispatchToProps)(AddStudentComp)
+export default AddStudent

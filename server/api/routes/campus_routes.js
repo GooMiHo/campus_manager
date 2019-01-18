@@ -2,9 +2,11 @@ const {Campus, Student} = require('../../db/models')
 const campusRouter = require('express').Router()
 
 // GET path '/api/campuses'
-campusRouter.get('/', async (req, res, next) => {
+campusRouter.get('/:userId', async (req, res, next) => {
+  const userId = req.params.userId
   try {
     const campuses = await Campus.findAll({
+      where: {userId: userId},
       include: [{model: Student, include: [{all: true}]}]
     })
     res.json(campuses)
@@ -13,8 +15,8 @@ campusRouter.get('/', async (req, res, next) => {
   }
 })
 
-// GET path '/api/campuses/id'
-campusRouter.get('/:id', async (req, res, next) => {
+// GET path '/api/campuses/campus/id'
+campusRouter.get('/campus/:id', async (req, res, next) => {
   try {
     const id = req.params.id
     const campus = await Campus.findOne({
@@ -27,8 +29,8 @@ campusRouter.get('/:id', async (req, res, next) => {
   }
 })
 
-// POST path '/api/campuses'
-campusRouter.post('/', async (req, res, next) => {
+// POST path '/api/campuses/campus'
+campusRouter.post('/campus/', async (req, res, next) => {
   try {
     //postman requires id, MAY ENCOUNTER PROBLEM HERE!
     //add an if statment if some info not included
@@ -41,8 +43,8 @@ campusRouter.post('/', async (req, res, next) => {
 
 //Write a route to remove a campus (based on its id)
 
-// DELETE path '/api/campuses/id'
-campusRouter.delete('/:id', (req, res, next) => {
+// DELETE path '/api/campuses/campus/id'
+campusRouter.delete('/campus/:id', (req, res, next) => {
   try {
     const id = req.params.id
     Campus.destroy({where: {id: id}})
@@ -52,7 +54,7 @@ campusRouter.delete('/:id', (req, res, next) => {
   }
 })
 
-campusRouter.put('/:id', async (req, res, next) => {
+campusRouter.put('/campus/:id', async (req, res, next) => {
   const id = req.params.id
   try {
     const [numOfAffectedRows, result] = await Campus.update(req.body, {

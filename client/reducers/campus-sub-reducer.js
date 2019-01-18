@@ -24,9 +24,9 @@ const addCampus = campus => ({
   campus
 })
 
-export const fetchCampuses = () => {
+export const fetchCampuses = userId => {
   return async dispatch => {
-    const {data: campuses} = await axios.get('/api/campuses')
+    const {data: campuses} = await axios.get(`/api/campuses/${userId}`)
     // data:campuses - like data as campuses (alias)
     dispatch(gotCampuses(campuses))
   }

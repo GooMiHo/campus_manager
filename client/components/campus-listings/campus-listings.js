@@ -18,7 +18,7 @@ const AddCampusButton = props => {
 
 class CampusListComp extends Component {
   componentDidMount() {
-    this.props.fetchCampuses()
+    this.props.fetchCampuses(this.props.userId)
   }
 
   render() {
@@ -54,13 +54,16 @@ class CampusListComp extends Component {
 }
 
 const mapStateToProps = state => {
-  return {campuses: state.campuses}
+  return {
+    campuses: state.campuses,
+    userId: state.user.id
+  }
 }
 
 const mapDispatchToProps = dispatch => {
   const theThunk = fetchCampuses
   return {
-    fetchCampuses: () => dispatch(theThunk()),
+    fetchCampuses: userId => dispatch(theThunk(userId)),
     removeCampus: id => dispatch(removeCampus(id))
   }
 }

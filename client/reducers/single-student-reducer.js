@@ -12,7 +12,7 @@ const gotSingleStudent = student => ({
 //Thunk (export)
 export const fetchSingleStudent = id => {
   return async dispatch => {
-    const {data: student} = await axios.get(`/api/students/${id}`)
+    const {data: student} = await axios.get(`/api/students/student/${id}`)
     dispatch(gotSingleStudent(student))
   }
 }

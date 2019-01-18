@@ -1,5 +1,8 @@
 const router = require('express').Router()
+const {Campus, Student} = require('../db/models')
 const User = require('../db/models/user')
+const {backupCampuses, backupStudents} = require('./backUpData')
+
 module.exports = router
 
 router.post('/login', async (req, res, next) => {
@@ -21,7 +24,22 @@ router.post('/login', async (req, res, next) => {
 
 router.post('/signup', async (req, res, next) => {
   try {
+    console.log('req.body', req.body)
     const user = await User.create(req.body)
+
+    backupCampuses.forEach(async campus => {
+      campus.id = Number(`${user.id}${campus.id}`)
+      campus.userId = user.id
+      await Campus.create(campus)
+    })
+
+    backupStudents.forEach(async student => {
+      student.id = Number(`${user.id}${student.id}`)
+      student.campusId = Number(`${user.id}${student.campusId}`)
+      student.userId = user.id
+      await Student.create(student)
+    })
+
     req.login(user, err => (err ? next(err) : res.json(user)))
   } catch (err) {
     if (err.name === 'SequelizeUniqueConstraintError') {

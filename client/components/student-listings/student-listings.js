@@ -21,7 +21,7 @@ const AddStudentButton = props => {
 
 class StudentsListComp extends Component {
   componentDidMount() {
-    this.props.fetchStudents()
+    this.props.fetchStudents(this.props.userId)
   }
 
   render() {
@@ -58,12 +58,13 @@ class StudentsListComp extends Component {
 
 //mapStateToProps
 const mapStateToProps = state => ({
-  students: state.students
+  students: state.students,
+  userId: state.user.id
 })
 
 //mapDispatchToProps
 const mapDispatchToProps = dispatch => ({
-  fetchStudents: () => dispatch(fetchStudents()),
+  fetchStudents: userId => dispatch(fetchStudents(userId)),
   removeStudent: id => dispatch(removeStudent(id))
 })
 
