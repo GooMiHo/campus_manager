@@ -16,7 +16,7 @@ studentRouter.get('/:userId', async (req, res, next) => {
 })
 
 // GET path '/api/students/student/:id'
-studentRouter.get('/:userId', async (req, res, next) => {
+studentRouter.get('/student/:id', async (req, res, next) => {
   try {
     const id = req.params.id
     const student = await Student.findOne({
@@ -29,13 +29,11 @@ studentRouter.get('/:userId', async (req, res, next) => {
   }
 })
 
-// GET path '/api/students/student'
+// GET path '/api/students/:userId/student'
 studentRouter.post('/:userId/student', async (req, res, next) => {
-  console.log('req.body ', req.body)
   try {
-    const userId = req.params.userId
     const student = req.body
-    student.userId = userId
+    student.userId = req.params.userId
     const newStudent = await Student.create(student) //maybe add some if statements to prevent submission without required fields
     res.status(201).json(newStudent)
   } catch (err) {
@@ -43,7 +41,7 @@ studentRouter.post('/:userId/student', async (req, res, next) => {
   }
 })
 
-studentRouter.delete('/:userId/student/:id', (req, res, next) => {
+studentRouter.delete('/student/:id', (req, res, next) => {
   try {
     const id = req.params.id
     Student.destroy({where: {id: id}})
@@ -53,7 +51,7 @@ studentRouter.delete('/:userId/student/:id', (req, res, next) => {
   }
 })
 
-studentRouter.put('/:userId/student/:id', async (req, res, next) => {
+studentRouter.put('/student/:id', async (req, res, next) => {
   try {
     const id = req.params.id
     const [numberOfEffectedRows, result] = await Student.update(req.body, {

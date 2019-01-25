@@ -12,6 +12,7 @@ import AddCampus from './components/forms/add-campus'
 import AddStudent from './components/forms/add-student'
 import UpdateCampus from './components/forms/update-campus'
 import UpdateStudent from './components/forms/update-student'
+import LoginHome from './components/login-home'
 
 /**
  * COMPONENT
@@ -52,7 +53,7 @@ class Routes extends Component {
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
-        <Route component={Login} />
+        <Route path="/" component={LoginHome} />
       </Switch>
     )
   }

@@ -19,7 +19,7 @@ export default class UpdateStudent extends Component {
 
   async componentDidMount() {
     const id = this.props.match.params.studentId
-    const {data: student} = await axios.get(`api/students/student/${id}`)
+    const {data: student} = await axios.get(`/api/students/student/${id}`)
     this.setState(student)
   }
 
@@ -30,7 +30,7 @@ export default class UpdateStudent extends Component {
     if (this.state.imageUrl.length === 0) student.imageUrl = DEFAULT_ENCODING
     const id = this.props.match.params.studentId
     await axios.put(`/api/students/student/${id}`, student)
-    this.props.history.push(`/students/student/${id}`)
+    this.props.history.push(`/students/${id}`)
   }
 
   handleChange(event) {
@@ -44,7 +44,7 @@ export default class UpdateStudent extends Component {
       <div className="main-form-box">
         <div className="bkgrd-main" />
         <form onSubmit={this.handleSubmit}>
-          <h1>Add Student</h1>
+          <h1>Update Student</h1>
           <div className="inner-form-box">
             <div>
               <label htmlFor="firsName">First Name: </label>

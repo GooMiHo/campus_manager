@@ -36,7 +36,6 @@ class AddStudentComp extends Component {
 
   handleChange(event) {
     let value = event.target.value
-    console.log('value', value)
     if (event.target.name === 'campusId') value = Number(value)
     this.setState({
       [event.target.name]: value
@@ -114,7 +113,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    makeStudent: userId => dispatch(makeStudent(userId))
+    makeStudent: (student, userId) => dispatch(makeStudent(student, userId))
   }
 }
 

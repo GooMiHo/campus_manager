@@ -18,7 +18,7 @@ export default class UpdateCampus extends Component {
 
   async componentDidMount() {
     const id = this.props.match.params.campusId
-    const {data: campus} = await axios.get(`api/campuses/campus/${id}`)
+    const {data: campus} = await axios.get(`/api/campuses/campus/${id}`)
     this.setState(campus)
   }
 
@@ -27,8 +27,8 @@ export default class UpdateCampus extends Component {
     const id = this.props.match.params.campusId
     const campus = this.state
     if (this.state.imageUrl.length === 0) campus.imageUrl = DEFAULT_ENCODING
-    await axios.put(`api/campuses/campus/${id}`, campus)
-    this.props.history.push(`/campuses/campus/${id}`)
+    await axios.put(`/api/campuses/campus/${id}`, campus)
+    this.props.history.push(`/campuses/${id}`)
   }
 
   handleChange(event) {

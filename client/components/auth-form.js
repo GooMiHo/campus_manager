@@ -2,6 +2,8 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
+import {Link} from 'react-router-dom'
+import LoginHome from '../components/login-home'
 
 /**
  * COMPONENT
@@ -11,6 +13,10 @@ const AuthForm = props => {
 
   return (
     <div>
+      {/* <Link to="/login" className="nav">Login</Link>
+      <Link to="/signup" className="nav">Sign Up</Link> */}
+      {/* <hr/ >
+      <button type="button" onClick={() => props.history.push('/')}>x</button> */}
       <form onSubmit={handleSubmit} name={name}>
         <div>
           <label htmlFor="email">
@@ -30,17 +36,11 @@ const AuthForm = props => {
         {error && error.response && <div> {error.response.data} </div>}
       </form>
       <a href="/auth/google">{displayName} with Google</a>
+      {/* <LoginHome/> */}
     </div>
   )
 }
 
-/**
- * CONTAINER
- *   Note that we have two different sets of 'mapStateToProps' functions -
- *   one for Login, and one for Signup. However, they share the same 'mapDispatchToProps'
- *   function, and share the same Component. This is a good example of how we
- *   can stay DRY with interfaces that are very similar to each other!
- */
 const mapLogin = state => {
   return {
     name: 'login',

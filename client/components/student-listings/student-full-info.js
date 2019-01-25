@@ -15,7 +15,6 @@ class StudentInfoComp extends Component {
   render() {
     const student = this.props.student
     const history = this.props.history
-    console.log('this.props.student: ', this.props.student)
 
     return (
       <div className="solid-background-div">

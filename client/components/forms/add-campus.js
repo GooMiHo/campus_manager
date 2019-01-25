@@ -3,8 +3,9 @@ import axios from 'axios'
 import {DEFAULT_ENCODING} from 'crypto'
 import {makeCampus} from '../../reducers/campus-sub-reducer'
 import CampusForm from './campus-form'
+import {connect} from 'react-redux'
 
-export default class AddCampus extends Component {
+class AddCampusComp extends Component {
   constructor() {
     super()
     this.state = {
@@ -22,8 +23,11 @@ export default class AddCampus extends Component {
 
     const campus = this.state
     if (this.state.imageUrl.length === 0) campus.imageUrl = DEFAULT_ENCODING
-    const {data: newCampus} = await axios.post('/api/campuses/campus', campus)
-    makeCampus(newCampus)
+    const {data: newCampus} = await axios.post(
+      `/api/campuses/${this.props.userId}/campus`,
+      campus
+    )
+    makeCampus(newCampus, this.props.userId)
     this.setState({imageUrl: '', name: '', address: '', description: ''})
     this.props.history.push('/campuses')
   }
@@ -44,3 +48,12 @@ export default class AddCampus extends Component {
     )
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    userId: state.user.id
+  }
+}
+
+const AddCampus = connect(mapStateToProps)(AddCampusComp)
+export default AddCampus

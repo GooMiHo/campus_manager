@@ -281,13 +281,30 @@ const backupStudents = [
   }
 ]
 
-export default function refillDB(userId) {
+export default async function refillDB(userId) {
+  await removeAll(userId)
+
   backupCampuses.forEach(async campus => {
-    campus.id = Number(`${userId}${campus.id}`)
-    await axios.post(`/api/campuses/${userId}`, campus)
+    const newCampus = {...campus}
+    newCampus.id = Number(`${userId}${campus.id}`)
+    await axios.post(`/api/campuses/${userId}/campus`, newCampus)
   })
   backupStudents.forEach(async student => {
-    student.id = Number(`${userId}${student.id}`)
-    await axios.post(`/api/students/${userId}`, student)
+    const newStudent = {...student}
+    newStudent.id = Number(`${userId}${student.id}`)
+    newStudent.campusId = Number(`${userId}${student.campusId}`)
+    await axios.post(`/api/students/${userId}/student`, newStudent)
+  })
+}
+
+async function removeAll(userId) {
+  const {data: allStudents} = await axios.get(`/api/students/${userId}`)
+  allStudents.forEach(async student => {
+    await axios.delete(`/api/students/student/${student.id}`)
+  })
+
+  const {data: allCampuses} = await axios.get(`/api/campuses/${userId}`)
+  allCampuses.forEach(async campus => {
+    await axios.delete(`/api/campuses/campus/${campus.id}`)
   })
 }

@@ -1,7 +1,8 @@
 import axios from 'axios'
 import React, {Component} from 'react'
+import {connect} from 'react-redux'
 
-export default class CampusSelection extends Component {
+class CampusSelectionComp extends Component {
   constructor() {
     super()
     this.state = {
@@ -11,7 +12,9 @@ export default class CampusSelection extends Component {
 
   async componentDidMount() {
     try {
-      const {data: campuses} = await axios.get('/api/campuses/')
+      const {data: campuses} = await axios.get(
+        `/api/campuses/${this.props.userId}`
+      )
       this.setState({campuses: campuses})
     } catch (err) {
       console.log(err)
@@ -19,7 +22,6 @@ export default class CampusSelection extends Component {
   }
 
   render() {
-    console.log('this.state', this.state)
     return (
       <select name="campusId" onChange={this.props.handleChange}>
         <option type="text" value={null}>
@@ -39,3 +41,12 @@ export default class CampusSelection extends Component {
     )
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    userId: state.user.id
+  }
+}
+
+const CampusSelection = connect(mapStateToProps)(CampusSelectionComp)
+export default CampusSelection

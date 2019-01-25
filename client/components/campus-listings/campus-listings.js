@@ -22,7 +22,6 @@ class CampusListComp extends Component {
   }
 
   render() {
-    console.log(this.props)
     const campuses = this.props.campuses
     return (
       <div className="listing-page">

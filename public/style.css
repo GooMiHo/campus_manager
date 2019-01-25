@@ -35,7 +35,7 @@ body {
   width: 100vw;
 }
 
-/* nav {
+nav {
   position: fixed;
   top: 0;
   width: 100vw;
@@ -47,7 +47,8 @@ body {
   padding: 10px;
   text-decoration: none;
   justify-content: center;
-} */
+  z-index: -1;
+}
 
 #nav-container {
   width: 95vw;
@@ -76,6 +77,8 @@ body {
 }
 
 .main-header {
+  /* font-family: 'Cinzel', serif; */
+  font-family: 'Cinzel Decorative', cursive;
   white-space: nowrap;
   text-align: center;
   white-space: pre;
@@ -453,3 +456,28 @@ hr {
   margin-left: 150px;
   margin-top: 30px;
 }
+
+/* =================================================== */
+
+.login-signup-div {
+  display: flex;
+  width: 250px;
+  justify-content: space-between;
+}
+
+.log-sign-button {
+  background-color: #08a6b5;
+  color: white;
+  padding: 5px;
+  margin: auto;
+  width: 70px;
+  text-align: center;
+}
+
+small {
+  color: white;
+}
+
+/* .login-home-div {
+
+} */
